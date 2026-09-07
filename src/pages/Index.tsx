@@ -6,6 +6,7 @@ import Karyakarta from "@/components/Karyakarta";
 import Contact from "@/components/Contact";
 import Donation from "@/components/Donation";
 import Footer from "@/components/Footer";
+import BackToTop from "@/components/BackToTop";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
       <Contact />
       <Donation />
       <Footer />
+      <BackToTop />
     </main>
   );
 };

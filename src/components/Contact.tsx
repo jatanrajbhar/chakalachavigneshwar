@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { MapPin, Mail, Instagram, ExternalLink } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import SectionHeading from "@/components/SectionHeading";
 
 const Contact = () => {
   const { t } = useI18n();
@@ -30,24 +31,19 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="relative py-12 bg-gradient-dark">
+    <section id="contact" className="relative py-20 md:py-28 bg-gradient-dark">
       <div ref={containerRef} className="section-container overflow-hidden">
-        {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
-            <span className="text-foreground">{t.contactTitle1}</span>{" "}
-            <span className="text-gradient-saffron">{t.contactTitle2}</span>
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            {t.contactSubtitle}
-          </p>
-          <div className="w-24 h-1 bg-gradient-saffron mx-auto rounded-full mt-4" />
-        </motion.div>
+        <SectionHeading
+          kicker={t.kickerContact}
+          title={
+            <>
+              <span className="text-foreground">{t.contactTitle1}</span>{" "}
+              <span className="text-gradient-saffron">{t.contactTitle2}</span>
+            </>
+          }
+          subtitle={t.contactSubtitle}
+          className="mb-14"
+        />
 
         <div className="grid lg:grid-cols-2 gap-4 lg:gap-12 pr-4 lg:pr-0">
           {/* Map */}
@@ -55,7 +51,7 @@ const Contact = () => {
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="relative w-full max-w-full rounded-2xl overflow-hidden border border-border shadow-crimson aspect-square lg:aspect-auto lg:h-full lg:min-h-[400px]"
+            className="relative w-full max-w-full rounded-2xl overflow-hidden border border-[hsl(var(--gold-soft))]/20 shadow-crimson aspect-square lg:aspect-auto lg:h-full lg:min-h-[400px]"
           >
             <iframe
               src="https://maps.google.com/maps?q=19.108104819234075,72.86032781792542&z=17&output=embed"
@@ -86,7 +82,7 @@ const Contact = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group flex items-start gap-4 p-6 bg-card/50 backdrop-blur-sm rounded-xl border border-border hover:border-secondary/50 transition-all duration-300 hover:shadow-gold"
+                className="card-ornate group flex items-start gap-4 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-gold"
               >
                 <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-saffron flex items-center justify-center">
                   <item.icon className="w-5 h-5 text-secondary-foreground" />
@@ -108,12 +104,15 @@ const Contact = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="mt-8 p-6 bg-gradient-crimson rounded-xl text-center"
+              className="relative mt-8 p-8 bg-gradient-crimson rounded-2xl text-center overflow-hidden border border-[hsl(var(--gold-soft))]/25"
             >
-              <p className="text-lg font-display font-semibold text-foreground mb-2">
+              {/* Rangoli wash */}
+              <div className="absolute inset-0 bg-rangoli-dots opacity-[0.12] pointer-events-none" />
+
+              <p className="relative font-devanagari text-2xl md:text-3xl text-[hsl(var(--gold-soft))] mb-3">
                 गणपती बाप्पा मोरया!
               </p>
-              <p className="text-sm text-foreground/80">
+              <p className="relative text-sm text-foreground/85">
                 {t.contactCta}
               </p>
             </motion.div>

@@ -2,15 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap');
 
 @layer base {
   :root {
     /* Ganesh Utsav Theme - Crimson, Saffron, Gold */
-    --background: 0 0% 5%;
+    --background: 10 14% 4%;
     --foreground: 40 30% 95%;
 
-    --card: 0 40% 8%;
+    --card: 0 35% 8%;
     --card-foreground: 40 30% 95%;
 
     --popover: 0 40% 8%;
@@ -32,6 +32,9 @@
     --accent: 45 85% 50%;
     --accent-foreground: 0 0% 5%;
 
+    /* Soft gold for ornaments and hairlines */
+    --gold-soft: 44 62% 72%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 40 30% 95%;
 
@@ -46,7 +49,17 @@
     --gradient-crimson: linear-gradient(135deg, hsl(0 67% 33%) 0%, hsl(0 50% 20%) 100%);
     --gradient-saffron: linear-gradient(135deg, hsl(25 96% 50%) 0%, hsl(45 85% 50%) 100%);
     --gradient-gold: linear-gradient(135deg, hsl(45 85% 50%) 0%, hsl(35 90% 55%) 100%);
-    --gradient-dark: linear-gradient(180deg, hsl(0 0% 5%) 0%, hsl(0 20% 8%) 100%);
+    --gradient-dark: linear-gradient(180deg, hsl(10 14% 4%) 0%, hsl(0 20% 8%) 100%);
+    /* Polished metallic gold, for ornaments and rules */
+    --gradient-gold-leaf: linear-gradient(
+      100deg,
+      hsl(38 70% 42%) 0%,
+      hsl(48 92% 68%) 22%,
+      hsl(44 80% 55%) 40%,
+      hsl(50 95% 78%) 55%,
+      hsl(40 75% 48%) 74%,
+      hsl(46 88% 64%) 100%
+    );
 
     /* Shadows */
     --shadow-glow: 0 0 60px hsl(25 96% 50% / 0.3);
@@ -71,6 +84,8 @@
 
   html {
     scroll-behavior: smooth;
+    /* Keep anchored sections clear of the fixed header */
+    scroll-padding-top: 6rem;
   }
 
   body {
@@ -79,6 +94,25 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
+  }
+
+  ::selection {
+    background: hsl(25 96% 50% / 0.3);
+    color: hsl(var(--foreground));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
@@ -93,6 +127,12 @@
     background-image: var(--gradient-gold);
   }
 
+  /* Metallic gold type, for section titles and ornaments */
+  .text-gold-leaf {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-gold-leaf);
+  }
+
   .bg-gradient-hero {
     background-image: var(--gradient-hero);
   }
@@ -101,8 +141,22 @@
     background-image: var(--gradient-crimson);
   }
 
+  /* These two are referenced across the components but were never defined,
+     so saffron/gold fills silently rendered as transparent. */
+  .bg-gradient-saffron {
+    background-image: var(--gradient-saffron);
+  }
+
+  .bg-gradient-gold {
+    background-image: var(--gradient-gold);
+  }
+
   .bg-gradient-dark {
     background-image: var(--gradient-dark);
+  }
+
+  .bg-gold-leaf {
+    background-image: var(--gradient-gold-leaf);
   }
 
   .shadow-glow {
@@ -125,11 +179,61 @@
     @apply absolute inset-0 bg-cover bg-center bg-no-repeat;
     will-change: transform;
   }
+
+  /* Devanagari display face, for Marathi headings and kickers */
+  .font-devanagari {
+    font-family: 'Tiro Devanagari Marathi', 'Playfair Display', serif;
+  }
+
+  /* Small label above a section title. Case and tracking are applied by the
+     caller via labelClasses(), since Devanagari must not get either. */
+  .section-kicker {
+    @apply inline-flex items-center gap-2 text-xs md:text-sm text-secondary/90;
+  }
+
+  /* Card with a fine gold hairline instead of a flat grey border */
+  .card-ornate {
+    @apply relative rounded-2xl border bg-card/50 backdrop-blur-sm;
+    border-color: hsl(var(--gold-soft) / 0.18);
+    box-shadow:
+      0 1px 0 hsl(var(--gold-soft) / 0.08) inset,
+      0 18px 50px -20px hsl(0 0% 0% / 0.8);
+  }
+
+  .card-ornate:hover {
+    border-color: hsl(var(--gold-soft) / 0.35);
+  }
+
+  /* Faint rangoli dot-grid, used as a section background wash */
+  .bg-rangoli-dots {
+    background-image: radial-gradient(
+      circle at 1.5px 1.5px,
+      hsl(var(--gold-soft) / 0.5) 1px,
+      transparent 0
+    );
+    background-size: 34px 34px;
+  }
+
+  /* Warm ember glow, layered behind content */
+  .bg-ember-glow {
+    background-image: radial-gradient(
+      ellipse 60% 50% at 50% 40%,
+      hsl(25 96% 50% / 0.16) 0%,
+      transparent 70%
+    );
+  }
 }
 
 @layer utilities {
   .text-shadow-lg {
     text-shadow: 0 4px 20px hsl(0 0% 0% / 0.8);
+  }
+
+  /* Warm halo behind light type sitting on photography */
+  .text-shadow-ember {
+    text-shadow:
+      0 2px 18px hsl(0 0% 0% / 0.9),
+      0 0 42px hsl(25 96% 50% / 0.35);
   }
 
   .animate-float {
@@ -155,6 +259,59 @@
     }
     to {
       box-shadow: 0 0 40px hsl(25 96% 50% / 0.6);
+    }
+  }
+
+  /* Slow rotation for mandala rings */
+  .animate-spin-slow {
+    animation: spin-slow 60s linear infinite;
+  }
+
+  .animate-spin-slow-reverse {
+    animation: spin-slow 90s linear infinite reverse;
+  }
+
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Diya flame flicker */
+  .animate-flicker {
+    animation: flicker 4s ease-in-out infinite;
+  }
+
+  @keyframes flicker {
+    0%, 100% {
+      opacity: 0.85;
+      transform: scale(1);
+    }
+    35% {
+      opacity: 1;
+      transform: scale(1.04);
+    }
+    62% {
+      opacity: 0.78;
+      transform: scale(0.98);
+    }
+  }
+
+  /* Light sweeping across gold ornaments */
+  .animate-shimmer {
+    background-size: 220% 100%;
+    animation: shimmer 7s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
     }
   }
 }

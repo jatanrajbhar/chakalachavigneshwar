@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion";
 import { Heart, Clock } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import logoIcon from "@/assets/logo-icon.png";
+import SectionHeading from "@/components/SectionHeading";
+import Mandala from "@/components/ornaments/Mandala";
 
 const Donation = () => {
   const { t } = useI18n();
@@ -10,26 +12,24 @@ const Donation = () => {
   const isInView = useInView(containerRef, { once: true, amount: 0.3 });
 
   return (
-    <section id="donation" className="relative py-12 overflow-hidden">
+    <section id="donation" className="relative py-20 md:py-28 overflow-hidden">
       {/* Decorative Background */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-secondary rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent rounded-full blur-3xl" />
       </div>
 
+      <Mandala
+        className="absolute -right-40 bottom-0 w-[26rem] text-[hsl(var(--gold-soft))]/[0.05] animate-spin-slow-reverse pointer-events-none"
+        petals={18}
+      />
+
       <div ref={containerRef} className="section-container relative z-10">
-        {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
-            <span className="text-gradient-gold">{t.donationTitle}</span>
-          </h2>
-          <div className="w-24 h-1 bg-gradient-gold mx-auto rounded-full" />
-        </motion.div>
+        <SectionHeading
+          kicker={t.kickerDonation}
+          title={<span className="text-gold-leaf">{t.donationTitle}</span>}
+          className="mb-12"
+        />
 
         {/* Coming Soon Card */}
         <motion.div
@@ -38,7 +38,7 @@ const Donation = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="max-w-2xl mx-auto"
         >
-          <div className="relative p-8 md:p-12 bg-card/50 backdrop-blur-sm rounded-2xl border border-border shadow-gold text-center overflow-hidden">
+          <div className="card-ornate relative p-8 md:p-12 shadow-gold text-center overflow-hidden">
             {/* Background Logo */}
             <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
               <img src={logoIcon} alt="" className="w-64 h-64 object-contain" />

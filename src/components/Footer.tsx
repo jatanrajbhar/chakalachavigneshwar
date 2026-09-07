@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Instagram, Mail, MapPin, Heart } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import logoIcon from "@/assets/logo-icon.png";
+import Toran from "@/components/ornaments/Toran";
 
 const Footer = () => {
   const { t } = useI18n();
@@ -16,7 +17,12 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative py-16 bg-card border-t border-border overflow-hidden">
+    <footer className="relative pt-20 pb-16 bg-card border-t border-[hsl(var(--gold-soft))]/20 overflow-hidden">
+      {/* Festoon hanging into the footer */}
+      <div className="absolute inset-x-0 top-0">
+        <Toran opacity={0.4} />
+      </div>
+
       {/* Background Decoration */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
         <img
@@ -43,8 +49,11 @@ const Footer = () => {
             <h3 className="text-xl font-display font-bold text-gradient-saffron mb-2">
               Chakala Cha Vighneshwar
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="font-devanagari text-sm text-muted-foreground">
               चकाला सार्वजनिक गणेश उत्सव मंडळ
+            </p>
+            <p className="font-devanagari text-sm text-[hsl(var(--gold-soft))]/80 mt-4">
+              {t.heroInvocation}
             </p>
           </motion.div>
 
@@ -119,7 +128,7 @@ const Footer = () => {
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent mb-8" />
+        <div className="h-px bg-gradient-to-r from-transparent via-[hsl(var(--gold-soft))]/35 to-transparent mb-8" />
 
         {/* Bottom */}
         <motion.div

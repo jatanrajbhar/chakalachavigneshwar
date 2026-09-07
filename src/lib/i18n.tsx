@@ -13,6 +13,10 @@ const translations = {
     heroSubtitle: "Chakala Sarvajanik Ganesh Utsav Mandal",
     heroPresents: "Presents",
     heroScroll: "Scroll",
+    heroInvocation: "॥ श्री गणेशाय नमः ॥",
+    heroLocation: "Chakala, Andheri East · Mumbai",
+    heroCtaGallery: "View Utsav Gallery",
+    heroCtaVisit: "Plan Your Darshan",
 
     // About
     aboutTitle1: "About",
@@ -26,6 +30,18 @@ const translations = {
     aboutCcvName: "Chakala Cha Vighneshwar",
     aboutPara2:
       " upholds Maharashtra's rich traditions with exceptional artistry, intricate decorations, and grand festivities that draw crowds from across Andheri East.",
+    aboutPartnersTitle: "Official Partners",
+    statsYears: "Years of Utsav",
+    statsMembers: "Sabhasad",
+    statsFounders: "Founders",
+
+    // Section kickers (shown in the other script, as an ornament)
+    kickerAbout: "आमच्याबद्दल",
+    kickerGanesh: "गणेशोत्सव",
+    kickerSabhasad: "सभासद",
+    kickerMahila: "महिला सभासद",
+    kickerContact: "संपर्क",
+    kickerDonation: "देणगी",
 
     // Ganesh Utsav
     ganeshTitle1: "Ganesh",
@@ -36,6 +52,10 @@ const translations = {
     // Sabhasad (Karyakarta)
     sabhasadTitle: "Sabhasad",
     sabhasadSubtitle: "The dedicated youth who make it all happen",
+
+    // Mahila Sabhasad
+    mahilaSabhasadTitle: "Mahila Sabhasad",
+    mahilaSabhasadSubtitle: "The women who lend their strength to our celebrations",
 
     // Contact
     contactTitle1: "Contact",
@@ -74,6 +94,10 @@ const translations = {
     heroSubtitle: "चकाला सार्वजनिक गणेश उत्सव मंडळ",
     heroPresents: "प्रस्तुत",
     heroScroll: "खाली स्क्रोल करा",
+    heroInvocation: "॥ श्री गणेशाय नमः ॥",
+    heroLocation: "चकाला, अंधेरी पूर्व · मुंबई",
+    heroCtaGallery: "उत्सव गॅलरी पहा",
+    heroCtaVisit: "दर्शनाची योजना करा",
 
     // About
     aboutTitle1: "आमच्या",
@@ -88,6 +112,18 @@ const translations = {
     aboutCcvName: "चकाला चा विघ्नेश्वर",
     aboutPara2:
       " महाराष्ट्राच्या समृद्ध परंपरांचे जतन करतो, अपवादात्मक कलाकुसर, विस्तृत सजावट आणि भव्य उत्सवांसह जे अंधेरी पूर्वभागातील लोकांना आकर्षित करतात.",
+    aboutPartnersTitle: "अधिकृत भागीदार",
+    statsYears: "उत्सवाची वर्षे",
+    statsMembers: "सभासद",
+    statsFounders: "संस्थापक",
+
+    // Section kickers (shown in the other script, as an ornament)
+    kickerAbout: "About Us",
+    kickerGanesh: "Ganesh Utsav",
+    kickerSabhasad: "Our Members",
+    kickerMahila: "Mahila Sabhasad",
+    kickerContact: "Get In Touch",
+    kickerDonation: "Donation",
 
     // Ganesh Utsav
     ganeshTitle1: "गणेश",
@@ -98,6 +134,10 @@ const translations = {
     // Sabhasad (Karyakarta)
     sabhasadTitle: "सभासद",
     sabhasadSubtitle: "हे सर्व शक्य करणारे समर्पित तरुण",
+
+    // Mahila Sabhasad
+    mahilaSabhasadTitle: "महिला सभासद",
+    mahilaSabhasadSubtitle: "आमच्या उत्सवांना बळ देणाऱ्या महिला",
 
     // Contact
     contactTitle1: "आमच्याशी",
@@ -128,7 +168,11 @@ const translations = {
 } as const;
 
 type Lang = "en" | "mr";
-type Translations = typeof translations.en;
+
+// Values widen to `string` so every language pack is interchangeable, while
+// the key set stays pinned to the English pack — a language missing a key
+// still fails to compile.
+type Translations = Record<keyof typeof translations.en, string>;
 
 interface I18nContextType {
   lang: Lang;
