@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useInView, useSpring } from "framer-motion";
 import { useI18n } from "@/lib/i18n";
 import ganeshLights from "@/assets/ganesh-lights.jpg";
 import rajComputersLogo from "@/assets/sponsors/Raj Computers.webp";
@@ -25,7 +25,16 @@ const About = () => {
     offset: ["start end", "end start"],
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  // Smoothed for the same reason as Hero's parallax: raw scrollYProgress
+  // steps in large jumps on a fast flick scroll, which looks like glitching.
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 300,
+    damping: 40,
+    mass: 0.5,
+    restDelta: 0.001,
+  });
+
+  const backgroundY = useTransform(smoothProgress, [0, 1], ["0%", "30%"]);
 
   const stats = [
     { value: "10+", label: t.statsYears },

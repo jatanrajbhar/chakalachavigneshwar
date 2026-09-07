@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { MapPin, Images, CalendarHeart } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import heroImage from "@/assets/ganesh-hero.jpg";
@@ -15,9 +15,20 @@ const Hero = () => {
     offset: ["start start", "end start"],
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "45%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "80%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  // Raw scrollYProgress jumps in large per-frame steps on a fast flick
+  // scroll, which reads as glitching once it drives translateY/opacity on
+  // the photo, logo and text. Spring-smoothing it (as Header already does
+  // for its progress bar) makes those follow the scroll instead of snapping.
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 300,
+    damping: 40,
+    mass: 0.5,
+    restDelta: 0.001,
+  });
+
+  const backgroundY = useTransform(smoothProgress, [0, 1], ["0%", "45%"]);
+  const textY = useTransform(smoothProgress, [0, 1], ["0%", "80%"]);
+  const opacity = useTransform(smoothProgress, [0, 0.6], [1, 0]);
 
   return (
     <section
