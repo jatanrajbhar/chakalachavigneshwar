@@ -90,20 +90,24 @@ const Hero = () => {
           {/* Ember bloom */}
           <div className="absolute w-[130%] aspect-square rounded-full bg-secondary/20 blur-3xl" />
 
+          {/* will-change-transform promotes these to their own GPU layer, so
+              the continuous rotate is a cheap composite instead of a
+              software repaint of the whole SVG every frame — the biggest
+              single cause of Android jank here. */}
           <Mandala
-            className="absolute w-[168%] max-w-none aspect-square text-[hsl(var(--gold-soft))]/25 animate-spin-slow"
+            className="absolute w-[168%] max-w-none aspect-square text-[hsl(var(--gold-soft))]/25 animate-spin-slow will-change-transform"
             petals={28}
           />
           <Mandala
-            className="absolute w-[128%] max-w-none aspect-square text-secondary/20 animate-spin-slow-reverse"
+            className="absolute w-[128%] max-w-none aspect-square text-secondary/20 animate-spin-slow-reverse will-change-transform"
             petals={16}
           />
 
-          <div className="animate-float">
+          <div className="animate-float will-change-transform">
             <img
               src={logoMain}
               alt="Chakala Cha Vighneshwar"
-              className="relative w-52 sm:w-64 md:w-80 lg:w-[22rem] drop-shadow-2xl"
+              className="relative w-52 sm:w-64 md:w-80 lg:w-[22rem] drop-shadow-lg"
             />
           </div>
         </motion.div>
@@ -145,7 +149,11 @@ const Hero = () => {
           </a>
           <a
             href="#contact"
-            className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[hsl(var(--gold-soft))]/40 bg-background/30 backdrop-blur-sm font-medium text-[hsl(var(--gold-soft))] transition-all duration-300 hover:border-[hsl(var(--gold-soft))]/80 hover:bg-background/50"
+            // backdrop-blur-sm stays constant on hover — animating the
+            // background's opacity underneath a backdrop-filter forces a
+            // full blur resample every transition frame, which is brutal
+            // on Android. Only border/text color change now.
+            className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[hsl(var(--gold-soft))]/40 bg-background/40 backdrop-blur-sm font-medium text-[hsl(var(--gold-soft))] transition-colors duration-300 hover:border-[hsl(var(--gold-soft))]/80 hover:text-secondary"
           >
             <CalendarHeart className="w-4 h-4" />
             {t.heroCtaVisit}
